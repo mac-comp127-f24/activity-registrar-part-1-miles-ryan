@@ -19,12 +19,12 @@ public class Student {
     public String getName() {
         return name;
     }
-
+    
     /**
      * Returns all courses this student is currently enrolled in.
      */
     public List<Course> getCourses() {
-        return courses;
+        return new ArrayList<>(courses);
     }
 
     /**

@@ -74,6 +74,12 @@ class RegistrarTest {
         assertFalse(comp127.getRoster().contains(sally));
     }
 
+    @Test
+    void clientsCannotModifyCourses() {
+       sally.getCourses().add(comp127);
+    }
+
+
     // ------ Post-test invariant check ------
     //
     // This is a bit persnickety for day-to-day testing, but these kinds of checks are appropriate
