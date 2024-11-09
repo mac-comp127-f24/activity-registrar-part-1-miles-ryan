@@ -1,6 +1,8 @@
 package registrar;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,14 +38,14 @@ class RegistrarTest {
 
     @Test
     void studentStartsInNoCourses() {
-        assertEquals(List.of(), sally.getCourses());
+        assertEquals(Set.of(), sally.getCourses());
     }
 
     @Test
     void studentCanEnroll() {
         sally.enrollIn(comp127);
-        assertEquals(List.of(comp127), sally.getCourses());
-        assertEquals(List.of(sally), comp127.getRoster());
+        assertEquals(Set.of(comp127), sally.getCourses());
+        assertEquals(Set.of(sally), comp127.getRoster());
     }
 
     // ------ Enrollment limits ------
@@ -76,7 +78,42 @@ class RegistrarTest {
 
     @Test
     void clientsCannotModifyCourses() {
-       sally.getCourses().add(comp127);
+        assertThrows(UnsupportedOperationException.class, () -> {
+            // code that should cause the exception
+            sally.getCourses().add(comp127);
+         });
+         
+    }
+
+    @Test
+    void clientsCannotModifyRoster() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            // code that should cause the exception
+            comp127.getRoster().add(sally);
+         });
+         
+    }
+
+    @Test
+    void multipleStudentsInAClass() {
+        List <Student> freds = new ArrayList<Student>();
+        for (int i = 0; i < 15; i++) {
+            fred.enrollIn(basketWeaving101);
+            basketWeaving101.enroll(fred);
+            freds.add(fred);
+        }
+        assertFalse(basketWeaving101.getRoster().size() > 1);
+       
+    }
+
+    @Test
+    void studentEnrolledInCourseMultipleTimes() {
+       
+        for (int i = 0; i < 5; i++) {
+            fred.enrollIn(basketWeaving101);
+        }
+
+        assertFalse(fred.getCourses().size() > 1);
     }
 
 

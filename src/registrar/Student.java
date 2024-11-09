@@ -1,16 +1,19 @@
 package registrar;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 /**
  * A student at a school.
  */
 @SuppressWarnings("WeakerAccess")
 public class Student {
     final private String name;
-    private List<Course> courses = new ArrayList<>();
+    private Set<Course> courses = new HashSet<>();
 
     public Student(String name) {
         this.name = Objects.requireNonNull(name, "name");
@@ -23,8 +26,8 @@ public class Student {
     /**
      * Returns all courses this student is currently enrolled in.
      */
-    public List<Course> getCourses() {
-        return new ArrayList<>(courses);
+    public Set<Course> getCourses() {
+        return Collections.unmodifiableSet(courses);
     }
 
     /**
